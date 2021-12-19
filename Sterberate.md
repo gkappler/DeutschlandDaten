@@ -86,39 +86,3 @@ Die Sterberaten der älteren Bevölkerung unterscheidet sich stark zwischen den 
 ![Sterberate 85+](images/Sterberate_85:200_Nordrhein-Westfalen Schleswig-Holstein Sachsen Hessen.svg)
 ![Sterberate 85+](images/Sterberate_85:200_Brandenburg Berlin Baden-Württemberg Sachsen-Anhalt Thüringen.svg)
 
-
-Ich freue mich Euch mal wieder zu sehen.
-Wie Ulrike, ich hatte zuviele online-meetings in meiner Vergangenheit.
-
-Ich mache meine Hausaufgaben-Rechen-Projekte, 
-freue mich sehr fokussiert über Zusammenarbeit.
-Helfe sehr gerne, wenn ich persönlich angeschrieben werde.
-Prioritäten verändern sich derzeit, und was tun...
-Was verbindliches zuzusagen muss ich lange überlegen.
-
-Ich will helfen offene Daten als unabhängiges Netzwerk.
-Eher keine Plattform & Projektmanagement.
-
-habe 2 konkrete Fragen:
-1. Wo biete ich Euch meine Datenaufbereitung für Julia zur Nutzung an?
-2. Wo finde ich eine Doku Eurer Daten, um sie ggf. als datadep in julia zu integrieren?
-
-Vernetzung...
-
-Ich nehme mal als Anregung, besser auf meiner Seite zusammenzustellen:
-
-Ich suche:
-3. Daten, Modelle und Code öffentlich diskutieren? Warum ein internes Wiki?
-4. Ich bin halb zufrieden mit github pages, static sites in Julia... wo kann ich von Euch lernen?
-
-Ich biete:
-- Visualisierung
-- Parsing
-
-Ich biete
-- Strategie: Ideen für offene kollektive Nutzung Dezentraler Daten
-  - julia datadeps
-- Methodik: 
-  - Feedback bei Modellierung (Bayes), Kausalitätstheorie
-  - Modellierung der Sterberate/Übersterblichkeit
-- "Publikation", kann (Daten-)Anfragen über Thüringer Landtag 
