@@ -1,4 +1,4 @@
-# CausalCovidDaten
+# DeutschlandDaten.jl
 Schnittstelle zu offiziellen Daten des
 - Statistischen Bundesamtes
 - Robert-Koch-Instituts
@@ -7,7 +7,7 @@ für Analysen
 mit der modernen Programmiersprache [Julia](https://julialang.org/) für statistische Berechnungen.
 
 ```julia
-julia> using CausalCovidDaten
+julia> using DeutschlandDaten
 ```
 stellt Funktionen zur Datenabfrage zur Verfügung.
 
@@ -15,7 +15,31 @@ stellt Funktionen zur Datenabfrage zur Verfügung.
 ### Sterbestatistik 
 
 ```julia
-julia> CausalCovidDaten.deaths_data()
+julia> deathdat = DeutschlandDaten.deaths_data()
+
+julia> [ (alter = a,
+          Männer = deaths(deathdat, jahr=2021, kw=44, alter=a, geschlecht="Männlich"),
+          Frauen = deaths(deathdat, jahr=2021, kw=44, alter=a, geschlecht="Weiblich"))
+         for a in DeutschlandDaten.Altersgruppen_KW ]  |> DataFrame
+13×3 DataFrame
+ Row │ alter      Männer   Frauen  
+     │ UnitRang…  Float64  Float64 
+─────┼─────────────────────────────
+   1 │ 0:30          78.0     48.0
+   2 │ 30:35         35.0     19.0
+   3 │ 35:40         38.0      9.0
+   4 │ 40:45         56.0     35.0
+   5 │ 45:50        110.0     62.0
+   6 │ 50:55        252.0    136.0
+   7 │ 55:60        452.0    247.0
+   8 │ 60:65        673.0    356.0
+   9 │ 65:70        885.0    491.0
+  10 │ 70:75       1051.0    604.0
+  11 │ 75:80       1226.0    936.0
+  12 │ 80:85       2130.0   1898.0
+  13 │ 85:200      1804.0   2142.0
+
+julia> DeutschlandDaten.deaths_data()
 (deaths2016_2021 = XLSXFile("sonderauswertung-sterbefaelle.xlsx") containing 17 Worksheets
             sheetname size          range        
 -------------------------------------------------
@@ -139,9 +163,39 @@ Für jedes Datum ist angegeben, wie viele Personen, differenziert nach den oben 
 URL: https://github.com/robert-koch-institut/COVID-19-Impfungen_in_Deutschland/raw/master/Aktuell_Deutschland_Bundeslaender_COVID-19-Impfungen.csv
 
 ### Bevölkerung 
+```julia
+julia> popdat = DeutschlandDaten.population();
+
+julia> [ (alter = a,
+          Männer = population(popdat, jahr=2021, alter=a, geschlecht="Männlich"),  
+          Frauen = population(popdat, jahr=2021, alter=a, geschlecht="Weiblich"))  
+         for a in DeutschlandDaten.Altersgruppen_Monate ]  |> DataFrame
+14×3 DataFrame
+ Row │ alter      Männer   Frauen  
+     │ UnitRang…  Int64    Int64   
+─────┼─────────────────────────────
+   1 │ 0:15       5896365  5581435
+   2 │ 15:30      6938514  6401690
+   3 │ 30:35      2876938  2704150
+   4 │ 35:40      2688873  2602003
+   5 │ 40:45      2531208  2503680
+   6 │ 45:50      2526278  2509582
+   7 │ 50:55      3265131  3222093
+   8 │ 55:60      3414124  3403194
+   9 │ 60:65      2866561  2951576
+  10 │ 65:70      2333788  2565316
+  11 │ 70:75      1854514  2113556
+  12 │ 75:80      1551030  1916998
+  13 │ 80:85      1432318  1998184
+  14 │ 85:200      850877  1655055
+```
+
+julia> [ (alter = a, N= population(popdat, jahr=2021, alter=a, monat=12, geschlecht=""))
+         for a in DeutschlandDaten.Altersgruppen_Monate ]  |> DataFrame
+
 #### Deutschland gesamt
 ```julia
-julia> popdat  = CausalCovidDaten.population()
+julia> DeutschlandDaten.population()
 1892×5 DataFrame
   Row │ Stichtag    Altersgruppe  Männlich  Weiblich  Insgesamt 
       │ Date        UnitRange…    Int64     Int64     Int64     
@@ -171,7 +225,7 @@ julia> popdat  = CausalCovidDaten.population()
     
 ### Bevölkerung Bundesländer
 ```julia
-julia> CausalCovidDaten.population_bundesländer()
+julia> DeutschlandDaten.population_bundesländer()
 2275×51 DataFrame
   Row │ Column1_Column1  Column2_Column2    Baden-Württemberg_männlich  Baden-Württemberg_weiblich  Baden-Württemberg_Insgesamt  Bayern_männlich  Bayern_weib ⋯
       │ Date             String31           Int64                       Int64                       Int64                        Int64            Int64       ⋯
