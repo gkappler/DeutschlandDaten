@@ -3,6 +3,7 @@ Pkg.activate(".")
 using DeutschlandDaten
 using Dates
 using DataFrames
+using DataFramesMeta
 using StatsBase
     
 deathdat = DeutschlandDaten.deaths_data()
@@ -23,7 +24,7 @@ mordat = [
         D=deaths(deathdat, alter=a, geschlecht=g, jahr=j, monat=monat)
     )
         for a in DeutschlandDaten.Altersgruppen_Monate
-            for g in ["männlich", "weiblich"]
+            for g in ["Männlich", "Weiblich"]
                 for j in 2000:2021
                     for monat in 1:12
                         ] |> DataFrame;
@@ -31,6 +32,25 @@ mordat = [
 mordat[:,:PD] = 10000 * mordat.D ./ mordat.N
 mordat[:,:col] = collect(zip(mordat.jahr, mordat.geschlecht))
 mordat[:,:row] = mordat.monat
+
+function gliding_mean(x, window=12)
+    y = Vector{Union{Missing,Float64}}(missing, length(x))
+    for i in 1:length(x)
+        y[i] = mean(skipmissing(x[max(1,i-div(window, 2)):min(end,i+window-div(window,2))]))
+    end
+    y
+end
+gliding_mean(mordat.PD)
+
+@transform!(groupby(mordat, [:alter, :geschlecht]),
+            :PD_12months = gliding_mean(:PD),
+            :date = Date.(:jahr, :monat, 1)
+            )
+
+using StatsPlots
+using Plots.PlotMeasures
+
+savefig(plotyears(mordat), "images/Sterberaten.svg")
 
 for alter=DeutschlandDaten.Altersgruppen_Monate
     d = filter(x->x.alter==alter, mordat)
