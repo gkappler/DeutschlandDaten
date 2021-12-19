@@ -52,6 +52,7 @@ using Plots.PlotMeasures
 
 savefig(plotyears(mordat), "images/Sterberaten.svg")
 
+savefig(plotyears(filter(x-> x.date>=Date(2016,1,1), mordat)), "images/Sterberaten_2016_2021.svg")
 for alter=DeutschlandDaten.Altersgruppen_Monate
     d = filter(x->x.alter==alter, mordat)
     us = unstack(d[:,[:row,:col,:PD]], :col, :PD)

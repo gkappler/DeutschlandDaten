@@ -11,6 +11,8 @@ Die Plots werden generiert in [Sterberate.jl](Sterberate.jl).
 ### Sterberate pro Monat im gleitenden Jahresmittel
 ![Sterberate](images/Sterberaten.svg)
 
+![Sterberate](images/Sterberaten_2016_2021.svg)
+
 ### Sterberate pro Monat
 ![Sterberate 0-30](images/Sterberate_Monat_0:15.svg)
 
