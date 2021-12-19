@@ -38,9 +38,14 @@ for alter=DeutschlandDaten.Altersgruppen_KW
     d = filter(x->x.alter==alter, mordat)
     us = unstack(d[:,[:row,:col,:PD]], :col, :PD)
     p = heatmap((Matrix(us[:,2:end]));
+                title = "Sterberate Deutschland im Alter $alter von 10'000",
                 yticks = 1:5:52,
                 xticks = (vcat(1:5:22, 23:5:44), repeat(collect(string.(2000:5:2021)),2)),
-                c = :reds
-                )
+                xrotation = -90,
+                c = :reds )
+    plot!([22.5]; seriestype=:vline, color=:black, legend=nothing, width=2)
+    annotate!([(12,45,"Männlich"), (23+12,45,"Weiblich")])
     savefig(p, "images/Sterberate_$(alter).svg")
 end
+
+plotattr("extra_kwargs")
