@@ -11,6 +11,14 @@ julia> using DeutschlandDaten
 ```
 stellt Funktionen zur Datenabfrage zur Verfügung.
 
+Das Paket ermöglicht
+- Aktualisierungen offizieller Daten für
+- Generierung von SQL Tabellen
+und entstand auf Basis von 
+1. https://github.com/gkappler/Sterbestatistik
+2. Skripten für Analysen im Auftrag von Dr. Ute Bergner.
+
+
 ## Daten
 ### Sterbestatistik 
 
@@ -277,14 +285,6 @@ Zur Nutzung sind z.T. das manuelle Herunterladen von Daten nötig.
 
 Ideal wären Automatisierungen über das Daten-API des Statistischen Bundesamtes und anderer Behörden.
 (Konstruktive Unterstützung als fork?)
-
-Das Paket entstand auf Basis von 
-Skripten für 
-Analysen im Auftrag von Dr. Ute Bergner.
-
-Diese Skripte ermöglichen auch
-- Aktualisierungen offizieller Daten für
-- Generierung von SQL Tabellen
 
 Die Performance kann an vielen Stellen verbessert werden.
 (Unit tests auf Datenausschnitte sollten vorher ausgebaut werden.)
