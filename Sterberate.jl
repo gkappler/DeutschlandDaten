@@ -12,6 +12,42 @@ popdatbl = DeutschlandDaten.population_bundesländer()
 splitticks(x) = ( [ e[1] for e in x], [ e[2] for e in x])
 
 
+
+mordat = [ 
+    (
+        alter = a,
+        geschlecht=g, 
+        jahr=j,
+        monat = monat,
+        N=convert(Int, round(population(popdat; alter=a, geschlecht=g, jahr=j))),
+        D=deaths(deathdat, alter=a, geschlecht=g, jahr=j, monat=monat)
+    )
+        for a in DeutschlandDaten.Altersgruppen_Monate
+            for g in ["männlich", "weiblich"]
+                for j in 2000:2021
+                    for monat in 1:12
+                        ] |> DataFrame;
+
+mordat[:,:PD] = 10000 * mordat.D ./ mordat.N
+mordat[:,:col] = collect(zip(mordat.jahr, mordat.geschlecht))
+mordat[:,:row] = mordat.monat
+
+for alter=DeutschlandDaten.Altersgruppen_Monate
+    d = filter(x->x.alter==alter, mordat)
+    us = unstack(d[:,[:row,:col,:PD]], :col, :PD)
+    p = heatmap((Matrix(us[:,2:end]));
+                title = "DE: Monatliche Sterberate, $alter alt, von 10'000",
+                yticks = 1:12,
+                xticks = (vcat(1:5:22, 23:5:44), repeat(collect(string.(2000:5:2021)),2)),
+                xrotation = -90,
+                c = :reds )
+    plot!([22.5]; seriestype=:vline, color=:black, legend=nothing, width=2)
+    annotate!([(12,10,"Männlich"), (23+12,10,"Weiblich")])
+    savefig(p, "images/Sterberate_Monat_$(alter).svg")
+end
+
+
+
 mordat = [ 
     (
         alter = a,
@@ -48,4 +84,3 @@ for alter=DeutschlandDaten.Altersgruppen_KW
     savefig(p, "images/Sterberate_$(alter).svg")
 end
 
-plotattr("extra_kwargs")
