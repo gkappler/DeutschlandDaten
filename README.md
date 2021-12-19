@@ -14,7 +14,9 @@ stellt Funktionen zur Datenabfrage zur Verfügung.
 Das Paket ermöglicht
 - Aktualisierungen offizieller Daten für
 - Generierung von SQL Tabellen
-und entstand auf Basis von 
+
+
+`DeutschlandDaten.jl` entstand auf Basis von 
 1. https://github.com/gkappler/Sterbestatistik
 2. Skripten für Analysen im Auftrag von Dr. Ute Bergner.
 
@@ -202,6 +204,7 @@ julia> [ (alter = a, N= population(popdat, jahr=2021, alter=a, monat=12, geschle
          for a in DeutschlandDaten.Altersgruppen_Monate ]  |> DataFrame
 
 #### Deutschland gesamt
+Zur Nutzung sind das manuelle Herunterladen von Daten nötig.
 ```julia
 julia> DeutschlandDaten.population()
 1892×5 DataFrame
@@ -232,6 +235,7 @@ julia> DeutschlandDaten.population()
 - Website: https://www-genesis.destatis.de/genesis//online?operation=table&code=12411-0006&bypass=true&levelindex=1&levelid=1639608813890#abreadcrumb
     
 ### Bevölkerung Bundesländer
+Zur Nutzung sind das manuelle Herunterladen von Daten nötig.
 ```julia
 julia> DeutschlandDaten.population_bundesländer()
 2275×51 DataFrame
@@ -261,19 +265,7 @@ julia> DeutschlandDaten.population_bundesländer()
 - Website: https://www-genesis.destatis.de/genesis//online?operation=table&code=12411-0013&bypass=true&levelindex=1&levelid=1639608813890#abreadcrumb
 
 
-## Einschränkungen und nächste Ziele
-### PCR-Inzidenzzahlen
-inklusive der Zahl administrierter Tests.
-
-### Metadaten
-#### Regelungen zu Datum
-bestimmen die Alters-Verteilung der 
-- Injektionen
-- Tests 
-- ?
-
-#### Landkreisdaten
-
+## Einschränkungen
 ### Standardisierungen
 Offizielle Datenquellen sind verschieden (wie Tiere im Zoo):
 - Herunterladbare Excel Tabellen
@@ -281,11 +273,25 @@ Offizielle Datenquellen sind verschieden (wie Tiere im Zoo):
    - aus voluminösen GitHub Archiven
    - manuell herunterladbare Datenausschnitte 
 
-Zur Nutzung sind z.T. das manuelle Herunterladen von Daten nötig.
 
 Ideal wären Automatisierungen über das Daten-API des Statistischen Bundesamtes und anderer Behörden.
 (Konstruktive Unterstützung als fork?)
 
 Die Performance kann an vielen Stellen verbessert werden.
 (Unit tests auf Datenausschnitte sollten vorher ausgebaut werden.)
+
+### Notaufnahme, Krankenhaus, Arztbesuche, Krankenkasse
+
+### PCR-Inzidenzzahlen
+inklusive der Zahl administrierter Tests.
+
+### Metadaten
+#### Regelungen zu Datum
+bestimmen die Alters-Verteilung der 
+- Injektionen
+- Tests
+- ?
+
+### Landkreisdaten
+
 
