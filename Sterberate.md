@@ -90,18 +90,18 @@ Die Sterberaten der älteren Bevölkerung unterscheidet sich stark zwischen den 
 
 ### Sterberate pro Kalenderwoche
 #### Sterberate 0-65
-![Sterberate 0-65](images/Sterberate_0:65_Baden-Württemberg Bayern Hamburg Hessen Berlin Rheinland-Pfalz Niedersachsen Nordrhein-Westfalen Schleswig-Holstein Bremen Brandenburg Sachsen Mecklenburg-Vorpommern Thüringen Saarland Sachsen-Anhalt.svg)
+![Sterberate 0-65](images/Sterberate_0:65_1.svg)
 
 #### Sterberate 65-75
-![Sterberate 65-75](images/Sterberate_65:75_Berlin Baden-Württemberg Brandenburg Schleswig-Holstein Bayern Hamburg Hessen Mecklenburg-Vorpommern Bremen Sachsen Niedersachsen Nordrhein-Westfalen Thüringen Rheinland-Pfalz Sachsen-Anhalt Saarland.svg)
+![Sterberate 65-75](images/Sterberate_65:75_1.svg)
 
 #### Sterberate 75-85
-![Sterberate 75-85](images/Sterberate_75:85_Mecklenburg-Vorpommern Brandenburg Sachsen-Anhalt Thüringen Saarland Nordrhein-Westfalen Sachsen Baden-Württemberg Berlin Bremen Rheinland-Pfalz Bayern Hessen Hamburg Niedersachsen Schleswig-Holstein.svg)
+![Sterberate 75-85](images/Sterberate_75:85_1.svg)
 
 #### Sterberate 85+
-![Sterberate 85+](images/Sterberate_85:200_Niedersachsen Bayern.svg)
-![Sterberate 85+](images/Sterberate_85:200_Rheinland-Pfalz Saarland Mecklenburg-Vorpommern.svg)
-![Sterberate 85+](images/Sterberate_85:200_Nordrhein-Westfalen Schleswig-Holstein Sachsen Hessen.svg)
-![Sterberate 85+](images/Sterberate_85:200_Brandenburg Berlin Baden-Württemberg Sachsen-Anhalt Thüringen.svg)
+![Sterberate 85+](images/Sterberate_85:200_1.svg)
+![Sterberate 85+](images/Sterberate_85:200_2.svg)
+![Sterberate 85+](images/Sterberate_85:200_3.svg)
+![Sterberate 85+](images/Sterberate_85:200_3.svg)
 
 

@@ -168,6 +168,7 @@ function plotyears(mordat, geschlecht::String, from_date = minimum(mordat[:,:dat
                    yearticks = (2021-year(from_date) > 10) ? ((year(from_date)):5:2021) : ((year(from_date)):1:2021))
     d = mordat[( mordat[:,:geschlecht] .== geschlecht ) .& (mordat[:,:date] .>= from_date ),:]
     date,maxdate=minimum(d[:,:date]),maximum(d[:,:date])
+    @info "background"
     plot([Date(2020,06,1), maxdate],
          color=:yellow, opacity = .25,
          seriestype=:vspan,
@@ -180,7 +181,9 @@ function plotyears(mordat, geschlecht::String, from_date = minimum(mordat[:,:dat
          seriestype=:vspan)
     plot!([Date(year,1,1) for year in (year(from_date)+1):2021];
           seriestype=:vline, color=:lightgray)
+    @info "PD"
     @df d plot!(:date, :PD; series=:alter, c=:gray, legend=nothing)
+    @info "PD_12months"
     p1 = @df d plot!(:date, :PD_12months; group=:alter, width=3,
                      xticks=([Date(y,01,01) for y in yearticks], [y for y in yearticks]),
                      xrotation = -90,

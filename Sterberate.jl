@@ -105,3 +105,61 @@ for alter=DeutschlandDaten.Altersgruppen_KW
     savefig(p, "images/Sterberate_$(alter).svg")
 end
 
+
+
+
+
+
+mordat = ([ 
+    (
+        bundesland = bl,
+        alter = a,
+        geschlecht=g, 
+        jahr=j,
+        monat = m,
+        date = Date(j, m, 28),
+        N = convert(Int, round(population(popdatbl, deathdat; bundesland = bl, alter=a, geschlecht=g, jahr=j))),
+        D = deaths(deathdat; bundesland = bl, alter=a, geschlecht=g, jahr=j, monat=m)
+    )
+    for bl in DeutschlandDaten.Bundesländer
+        for a in DeutschlandDaten.Altersgruppen_Bundesländer
+            for g in ["Männlich", "Weiblich"]
+                for j in 2000:2021
+                    for m in 1:12
+                        ]) |> DataFrame;
+
+@transform!(mordat,
+            :PD = :D ./ :N,
+            :col = collect(zip(:jahr, :geschlecht)),
+            :row = collect(zip(:bundesland, :monat)))
+
+function partifact(x, fact=10)
+    sp = sortperm(x)
+    r = Vector{Int}[[sp[1]]]
+    for i in sp[2:end]
+        if x[i] > x[r[end][1]] * fact
+            push!(r,[i])
+        else
+            push!(r[end],i)
+        end
+    end
+    r
+end
+    
+alter = first(DeutschlandDaten.Altersgruppen_Bundesländer)
+for (alter) = (DeutschlandDaten.Altersgruppen_Bundesländer)
+    mean_PD = combine(groupby(filter(x->x.alter ==  alter, mordat), :bundesland),
+                      :PD => x->mean(skipmissing(x)))
+    for (i, bli) = enumerate(partifact(mean_PD[:,2],2))
+        bls = mean_PD.bundesland[bli]
+        d = filter(x->x.alter ==  alter && x.bundesland in bls, mordat)
+        us = unstack(d[:,[:row,:col,:PD]], :col, :PD)
+        p = heatmap((Matrix(us[:,2:end]));
+                    yticks = splitticks([ (i, x[1]) for (i,x) in enumerate(us[:,1]) if x[2]==6 ]),
+                    xticks = (1:5:22, collect(string.(2000:5:2021))),
+                    c = :reds
+                    )
+        savefig(p, "images/Sterberate_$(alter)_$i.svg")
+        println("$(alter)_$i: ", bls)
+    end
+end
