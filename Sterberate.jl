@@ -129,7 +129,7 @@ mordat = ([
                         ]) |> DataFrame;
 
 @transform!(mordat,
-            :PD = :D ./ :N,
+            :PD = 10000 .* :D ./ :N,
             :col = collect(zip(:jahr, :geschlecht)),
             :row = collect(zip(:bundesland, :monat)))
 
@@ -146,19 +146,25 @@ function partifact(x, fact=10)
     r
 end
     
-alter = first(DeutschlandDaten.Altersgruppen_Bundesländer)
+alter = last(DeutschlandDaten.Altersgruppen_Bundesländer)
 for (alter) = (DeutschlandDaten.Altersgruppen_Bundesländer)
     mean_PD = combine(groupby(filter(x->x.alter ==  alter, mordat), :bundesland),
                       :PD => x->mean(skipmissing(x)))
     for (i, bli) = enumerate(partifact(mean_PD[:,2],2))
+        bli = partifact(mean_PD[:,2],2)[end]
         bls = mean_PD.bundesland[bli]
         d = filter(x->x.alter ==  alter && x.bundesland in bls, mordat)
         us = unstack(d[:,[:row,:col,:PD]], :col, :PD)
         p = heatmap((Matrix(us[:,2:end]));
+                    title = "Sterberate Bundesländer, $alter alt, von 10'000",
                     yticks = splitticks([ (i, x[1]) for (i,x) in enumerate(us[:,1]) if x[2]==6 ]),
-                    xticks = (1:5:22, collect(string.(2000:5:2021))),
+                    xticks = (vcat(1:5:22, 23:5:44), repeat(collect(string.(2000:5:2021)),2)),
+                    xrotation = -90,
                     c = :reds
                     )
+        plot!([22.5]; seriestype=:vline, color=:black, legend=nothing, width=2)
+        plot!((0:12:(size(us)[1])) .+ 0.5; seriestype=:hline, color=:black, legend=nothing, width=2)
+        annotate!([(12,size(us)[1]-5,"Männlich"), (23+12,size(us)[1]-5,"Weiblich")])
         savefig(p, "images/Sterberate_$(alter)_$i.svg")
         println("$(alter)_$i: ", bls)
     end
