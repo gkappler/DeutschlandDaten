@@ -102,6 +102,8 @@ Die Sterberaten der älteren Bevölkerung unterscheidet sich stark zwischen den 
 ![Sterberate 85+](images/Sterberate_85:200_1.svg)
 ![Sterberate 85+](images/Sterberate_85:200_2.svg)
 ![Sterberate 85+](images/Sterberate_85:200_3.svg)
-![Sterberate 85+](images/Sterberate_85:200_3.svg)
+![Sterberate 85+](images/Sterberate_85:200_4.svg)
+![Sterberate 85+](images/Sterberate_85:200_5.svg)
+![Sterberate 85+](images/Sterberate_85:200_6.svg)
 
 
