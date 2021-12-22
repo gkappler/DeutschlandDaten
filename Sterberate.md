@@ -8,6 +8,15 @@ Die Plots werden generiert in [Sterberate.jl](Sterberate.jl).
 - steigt und fällt mit der Jahreszeit, vor allem mit höherem Alter,
 - ändert sich von 2000 bis 2021.
 
+
+## Veränderungen der Sterberate
+Die alters-spezifische Übersterblichkeit
+- steigt und fällt mit der Jahreszeit, vor allem mit höherem Alter,
+- ändert sich von 2000 bis 2021.
+- zeigt Effekt der Geburtsjahrgänge
+
+![relative_Übersterblichkeit](images/relative_Übersterblichkeit.svg)
+
 ### Sterberate pro Monat im gleitenden Jahresmittel
 ![Sterberate](images/Sterberaten.svg)
 
@@ -69,20 +78,8 @@ Die Plots werden generiert in [Sterberate.jl](Sterberate.jl).
 
 ![Sterberate 85+](images/Sterberate_85:200.svg)
 
-## Veränderungen der Sterberate
-Die alters-spezifische Übersterblichkeit
-- steigt und fällt mit der Jahreszeit, vor allem mit höherem Alter,
-- ändert sich von 2000 bis 2021.
-
-### Sterberate pro Jahr
-
-### Sterberate pro Monat
-
-### Sterberate pro Kalenderwoche
-
 
 ## Sterberaten der Bundesländer
-Die Sterberaten der älteren Bevölkerung unterscheidet sich stark zwischen den Bundesländern.
 
 ### Sterberate pro Jahr
 
