@@ -51,7 +51,7 @@ iseq(x,y) = [ e.start >= y.start && ( e.stop < y.stop || e.stop == MAX)
 export population
 function population(popdat, deathdat=missing; jahr, geschlecht="Insgesamt", bundesland=missing, alter, monat = missing, kw=missing)
     if monat === missing && kw === missing
-        if bundesland===missing
+        r = if bundesland===missing
             # @assert geschlecht in geschlechter
             ## todo: boundary checks!
             rows = (popdat[:,1] .== Date(jahr-1,12,31)) .&
@@ -63,6 +63,7 @@ function population(popdat, deathdat=missing; jahr, geschlecht="Insgesamt", bund
             ##print(popdat[rows, end])
             sum(popdat[rows, "$(bundesland)_$(lowercase(geschlecht))"])
         end
+        convert(Int, round(r))
     elseif kw !== missing
         p1 = population(popdat,deathdat; alter=alter, geschlecht=geschlecht, bundesland = bundesland, jahr=jahr)
         p2 = population(popdat,deathdat; alter=alter, geschlecht=geschlecht, bundesland = bundesland, jahr=jahr+1)
