@@ -2,9 +2,28 @@ module DeutschlandDaten
 using DataDeps
 using CSV
 using DataFrames
+using StatsBase
 
+export alterstring
+alterstring(a) = "$(a.start)" * (a.stop==DeutschlandDaten.MAX ? "+" : "-$(a.stop)")
+
+export label_geschlecht
+label_geschlecht = Dict("Männlich" => "♂", "Weiblich" => "♀")
+
+export endofweek
+function endofweek(y, w)
+    d = Dates.firstdayofweek(Date(y)) + Dates.Day(2)
+    d + Dates.Week(w - (year(d)<y ? 0 : 1)) + Dates.Day(4)
 end
 
+export gliding_mean
+function gliding_mean(x, window=12)
+    y = Vector{Union{Missing,Float64}}(missing, length(x))
+    for i in 1:length(x)
+        y[i] = mean(skipmissing(x[max(1,i-div(window, 2)):min(end,i+window-div(window,2))]))
+    end
+    y
+end
 
 # data sources
 include("metadata.jl")
@@ -61,18 +80,28 @@ function plotyears(mordat, geschlecht::String, from_date = minimum(mordat[:,:dat
                      yaxis=yaxis,
                      ylim=ylim,
                      )
-    g = first(unique(mordat.alter))
-    annotate!([(maxdate,
+    g = first(unique(d.alter))
+    annotate!([(maximum(d[:,:date]),
                 d[map(x-> x == g,d.alter),:PD_12months][end],
                 text("$(g.start)", 6, halign=:left, valign=:vcenter))
-               for g in unique(mordat.alter)])
+               for g in unique(d.alter)])
     p1
 end
 
-export endofweek
-function endofweek(y, w)
-    d = Dates.firstdayofweek(Date(y)) + Dates.Day(2)
-    d + Dates.Week(w - (year(d)<y ? 0 : 1)) + Dates.Day(4)
-end
+export plotquelle!
+plotquelle!(a...;
+            quelle = "Statistisches Bundesamt, Robert-Koch-Institut",
+            reference = "https://github.com/gkappler/DeutschlandDaten/blob/main/Sterberate.md",
+            tag = "Weitere Länder?",
+            inset = bbox(.5, 400px, 50px, 50px),
+            titlefontsize = 6, margin=0mm,
+            title = "$tag?    $reference\n Datenquellen: $quelle    |    Visualisierung: Dr. Gregor Kappler",
+            kw...) =
+    plot!(a...; title=title,
+          inset = inset,
+          titlefontsize = titlefontsize,
+          bg_inside = nothing, framestyle=nothing, showaxis=false, xticks=false, yticks=false,
+          margin=margin,
+          kw...)
 
 end
