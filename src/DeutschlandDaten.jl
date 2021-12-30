@@ -17,10 +17,15 @@ function endofweek(y, w)
 end
 
 export gliding_mean
-function gliding_mean(x, window=12)
+"""
+    gliding_mean(x, left=6, right=left)
+
+compute gliding mean over x with a window left and right (if data available).
+"""
+function gliding_mean(x, left::Int=6, right::Int=left)
     y = Vector{Union{Missing,Float64}}(missing, length(x))
     for i in 1:length(x)
-        y[i] = mean(skipmissing(x[max(1,i-div(window, 2)):min(end,i+window-div(window,2))]))
+        y[i] = mean(skipmissing(x[max(1,i-left):min(end,i+right)]))
     end
     y
 end
