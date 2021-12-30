@@ -4,8 +4,12 @@ using CSV
 using DataFrames
 using StatsBase
 
-export alterstring
+export tot_cgrad
+tot_cgrad = cgrad([:white, :black],[-.1,1]) # :reds
+
+export alterstring, rangestart
 alterstring(a) = "$(a.start)" * (a.stop==DeutschlandDaten.MAX ? "+" : "-$(a.stop)")
+rangestart(x) = x.start
 
 export label_geschlecht
 label_geschlecht = Dict("Männlich" => "♂", "Weiblich" => "♀")
