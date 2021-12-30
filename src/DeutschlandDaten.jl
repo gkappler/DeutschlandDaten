@@ -89,19 +89,50 @@ function plotyears(mordat, geschlecht::String, from_date = minimum(mordat[:,:dat
 end
 
 export plotquelle!
-plotquelle!(a...;
-            quelle = "Statistisches Bundesamt, Robert-Koch-Institut",
-            reference = "https://github.com/gkappler/DeutschlandDaten/blob/main/Sterberate.md",
-            tag = "Weitere Länder?",
-            inset = bbox(.5, 400px, 50px, 50px),
-            titlefontsize = 6, margin=0mm,
-            title = "$tag?    $reference\n Datenquellen: $quelle    |    Visualisierung: Dr. Gregor Kappler",
-            kw...) =
+"""
+    plotquelle!(a...;
+                data = "Datenquellen: Statistisches Bundesamt, Robert-Koch-Institut",
+                codepage = "Sterberate.md",
+                code = "Quelle: https://github.com/gkappler/DeutschlandDaten/blob/main/\$codepage",
+                inset = bbox(.5, 400px, 50px, 50px),
+                titlefontsize = 6, margin=0mm,
+                title = "\$data\n\$code",
+                kw...)
+
+Add a reference for plot updates.
+"""
+function plotquelle!(a...;
+                     data = "Datenquellen: Statistisches Bundesamt, Robert-Koch-Institut",
+                     codepage = "Sterberate.md",
+                     code = "Quelle: https://github.com/gkappler/DeutschlandDaten/blob/main/$codepage",
+                     inset = bbox(.5, 400px, 50px, 50px),
+                     titlefontsize = 6, margin=0mm,
+                     title = "$data\n$code",
+                     kw...) 
     plot!(a...; title=title,
           inset = inset,
           titlefontsize = titlefontsize,
           bg_inside = nothing, framestyle=nothing, showaxis=false, xticks=false, yticks=false,
           margin=margin,
           kw...)
+end
+
+function savefigs(p, file, quelle=true; kw...)
+    quelle && plotquelle!(p; subplot = length(p.subplots)+1, kw...)
+    savefig(p,"images/$file.svg")
+    savefig(p,"images/$file.png")
+end
+
+export plot_unstacked_heatmap
+plot_unstacked_heatmap(d; kw...) =
+    plot_unstacked_heatmap((p,m)-> (p,m), d; kw...)
+function plot_unstacked_heatmap(f::Function, d; labelf, kw...) 
+    us = unstack(d[:,Symbol[:row,:col,:value]], :col, :value)
+    yt = map(labelf, us[:,1])
+    p = heatmap(Matrix(us[:,2:end]);
+               yticks = (1:length(yt), yt),
+               kw...)
+    f(p, us)
+end
 
 end
