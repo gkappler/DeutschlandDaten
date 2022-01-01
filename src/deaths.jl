@@ -21,11 +21,23 @@ gender_code = Dict("männlich" => "Männlich",
 
 Bundesländer_index = Dict(r => i for (i,r) in enumerate(Bundesländer))
 
-## für Bundesländer
-Altersgruppen_Bundesländer = [0:65, 65:75, 75:85, 85:MAX]
 
-Altersgruppen_KW = [ 0:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
-Altersgruppen_Monate = [ 0:15, 15:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
+Altersgruppen_Monate       = [ 0:15, 15:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
+Altersgruppen_KW           = [ 0:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
+Altersgruppen_Bundesländer = [ 0:65, 65:75, 75:85, 85:MAX]
+
+
+
+
+"""
+    Altersgruppen_Monate = [ 0:15, 15:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
+    Altersgruppen_KW = [ 0:30, [a:a+5 for a in 30:5:80]..., 85:MAX ];
+    Altersgruppen_Bundesländer = [0:65, 65:75, 75:85, 85:MAX]
+
+Note: Sonderauswertung is more fine-grained, population data is only providing 85+ group.
+"""
+Altersgruppen_Monate, Altersgruppen_KW, Altersgruppen_Bundesländer
+
 
 geschlechter = ["Männlich", "Weiblich"] # , "Insgesamt"
 
@@ -70,7 +82,6 @@ function deaths(data;
                 col = monat + 4
                 sheet[zeile, col]
             else
-                
                 # skipping 11 lines,
                 zeile = 11 +
                     # 16 lines blocks for years,
@@ -81,13 +92,17 @@ function deaths(data;
                     elseif alter.start == 15
                         1
                     else
-                        1 + max(0, (alter.start-25)/5)
+                        1 + max(0, div(alter.start-25,5))
                     end
                 ## look up gender tab
                 tab = dset["D_$(dsheet)-$(joffset)_Monate_AG_$geschlecht"]
                 # and check in cw column, skipping first 3
                 # @info "deaths lookup" "$dsheet$geschlecht", zeile, monat
-                tab[convert(Int,zeile), monat+3]
+                if alter==Altersgruppen_Monate[end]
+                    sum([tab[i, monat+3] for i in zeile:(zeile+2)])
+                else
+                    tab[zeile, monat+3]
+                end
 	    end
         end
     else  # kw !== missing
@@ -104,7 +119,7 @@ function deaths(data;
                 end +
                     get(alterzeile, alter) do # year steps
                         error("alter must be in $(keys(alterzeile))")
-                    end - 1
+                    end - 2
 
             col = kw + 4
             sheet[zeile, col]
@@ -124,12 +139,16 @@ function deaths(data;
                 # 16 lines blocks for years,
                 (joffset-jahr)*16 + 
                 # 5 year steps beginning age 30
-                max(0, (alter.start-25)/5)
+                max(0, div(alter.start-25,5))
             ## look up gender tab
             tab = dset["D_$(dsheet)_$(joffset)_KW_AG_$geschlecht"]
             # @info "deaths lookup" "$dsheet$geschlecht", zeile, kw
             # and check in cw column, skipping first 3
-            tab[convert(Int,zeile), kw+3]
+            if alter==Altersgruppen_KW[end]
+                sum([tab[i, kw+3] for i in zeile:(zeile+2)])
+            else
+                tab[zeile, kw+3]
+            end
         end
     end
     r isa Number ? r : missing

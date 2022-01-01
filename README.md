@@ -10,6 +10,10 @@ mit der modernen Programmiersprache [Julia](https://julialang.org/) für statist
 julia> using DeutschlandDaten
 ```
 stellt Funktionen zur Datenabfrage zur Verfügung.
+Beispiele finden Sie in den [unit tests](tests/runtests.jl).
+
+Die aktuellen Analysen finden Sie in 
+- [Sterberate](Sterberate.md).
 
 Das Paket ermöglicht
 - Aktualisierungen offizieller Daten für
