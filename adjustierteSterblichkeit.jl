@@ -65,7 +65,7 @@ let title="Demographie (Bevölkerungszahl)\nder Bundesrepublik Deutschland der J
 end
 
 
-@df mordat yearsareaplot(:date, :D, :group; legend=nothing, seriescolor=ag_col, linecolor=:black, yticks=(0000:10000:100000, 0:10:100),
+p = @df mordat yearsareaplot(:date, :D, :group; legend=nothing, seriescolor=ag_col, linecolor=:black, yticks=(0000:10000:100000, 0:10:100),
                          title="Sterbezahlen\n Bundesrepublik Deutschland",
                          ylabel="Tausend / Monat",
                          annotation_margin =-500, xlim=(Date(1998,5,1),Date(2023,7,1)))
@@ -102,7 +102,7 @@ d = adjustierte_sterbefälle(mordat, referenceP_AG(filter(x->x.jahr == j,mordat)
 
 @df d plot(:monat, :adjD; group=:jahr, linecolor=[ getindex(cgrad(:reds,22),j-2000+1) for j in :jahr], legend=nothing )
 
-@df filter(x->x.jahr in 2010:2019,d) boxplot(:monat, :adjD, :jahr, alpha=.25, label="2010-2019",
+p = @df filter(x->x.jahr in 2010:2019,d) boxplot(:monat, :adjD, :jahr, alpha=.25, label="2010-2019",
                                              title="Adjustierte Sterbezahlen\nBundesrepublik Deutschland",
                                              topmargin=10px,
                                              ylabel="Tausend",
