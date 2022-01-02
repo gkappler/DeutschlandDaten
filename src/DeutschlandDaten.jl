@@ -3,12 +3,13 @@ using DataDeps
 using CSV
 using DataFrames
 using StatsBase
+using StatsPlots
 
 export tot_cgrad
 tot_cgrad = cgrad([:white, :black],[-.1,1]) # :reds
 
 export alterstring, rangestart
-alterstring(a) = "$(a.start)" * (a.stop==DeutschlandDaten.MAX ? "+" : "-$(a.stop)")
+alterstring(a) = (iszero(a.start) ? "" : "$(a.start)") * (a.stop==DeutschlandDaten.MAX ? "+" : "-$(a.stop)")
 rangestart(x) = x.start
 
 export label_geschlecht
