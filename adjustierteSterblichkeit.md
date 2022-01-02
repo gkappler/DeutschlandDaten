@@ -12,6 +12,8 @@ Die Verstorbenenzahl wird bestimmt von Demographie und bedingten Sterbewahrschei
 
 # Adjustierung
 
+![adjustierte_Sterbezahlen_Deutschland_](images/adjustierte_Sterbezahlen_Deutschland_jährlich.svg)
+
 ![adjustierte_Sterbezahlen_Deutschland_monatlich](images/adjustierte_Sterbezahlen_Deutschland_monatlich.svg)
 
 
