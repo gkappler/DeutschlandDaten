@@ -75,7 +75,7 @@ if false
     @df @combine(groupby(mordat,:date), :D = sum(:D)) plot(:date, :D, seriestype=:bar, legend=nothing, fillcolor=:black, linecolor=:darkgray, linewidth=.001)
 end
 
-p= @df @combine(groupby(mordat,:date), :D = sum(:D)) plot(:date, :D/1000, legend=nothing, fillcolor=:black, linecolor=:black, linewidth=2, ylim=(0,130000/1000),
+p= @df @combine(groupby(mordat,:date), :D = sum(:D)) plot(; legend=nothing, fillcolor=:black, linecolor=:black, linewidth=2, ylim=(0,130000/1000),
                                                           title ="Verstorbenenzahl, Demographie-adjustiert\nBundesrepublik Deutschland",
                                                           ylabel="Tausend / Monat",
                                                           xticks=([Date(y,1,1) for y in 2000:2021], 2000:2021),
@@ -85,9 +85,9 @@ for j in (2021,2000)
     rP = referenceP_AG(filter(x->x.jahr == j,mordat))
     sp = filter(x->x.jahr in 2000:2021, adjustierte_sterbefälle(mordat, rP, Ntotal))
     faktor = mean(filter(x->x.jahr==j, Ntotal).Ntotal)#lastD/sp.adjPD[end]
-    @df sp plot!(p, Date.(:jahr,:monat,1), :adjPD .* faktor/1000, label="$j adjustiert", width=1)
+    @df sp plot!(p, Date.(:jahr,:monat,1), :adjPD .* faktor/1000, label="auf Demographie $j adjustiert", width=1)
 end
-@df @combine(groupby(mordat,:date), :D = sum(:D)) plot!(p,:date, :D/1000, legend=nothing, fillcolor=:black, linecolor=:black, linewidth=2)
+@df @combine(groupby(mordat,:date), :D = sum(:D)) plot!(p,:date, :D/1000, legend=:bottomright, label="offizielle Sterbefallzahl", fillcolor=:black, linecolor=:black, linewidth=2)
 p
 DeutschlandDaten.savefigs(p, "adjustierte_Sterbezahlen_Deutschland_monatlich")
 
