@@ -1,5 +1,5 @@
 ## Die Zahl Verstorbener zu einer Zeit 
-![Sterbezahlen_Deutschland_monatlich](images/Sterbezahlen_Deutschland_monatlich.svg)
+![Sterbezahlen_Deutschland_wöchentlich](images/Sterbezahlen_Deutschland_wöchentlich.svg)
 
 Auf den ersten Blick steigt die Zahl Verstorbener pro Woche in Deutschland seit 2000.
 
@@ -7,6 +7,7 @@ Jedoch wird die Zahl Verstorbener bestimmt von
 1. Demographie (Alter / Geschlecht der Bevölkerung, etc.)
 2. Sterbewahrscheinlichkeiten demographischer Gruppen.
 
+![Sterbezahlen_Deutschland_wöchentlich](images/Sterbezahlen_Deutschland_demographisch_wöchentlich.svg)
 
 ### Demographischer Wandel
 

@@ -1,4 +1,10 @@
 include("models/data_month.jl")
+include("models/data_kw.jl")
+
+Ntotal = @combine(groupby(mordat,[:jahr,:monat]), :Ntotal=sum(:N))
+Ntotalkw = @combine(groupby(mordatkw,[:jahr,:kw]), :Ntotal=sum(:N))
+@transform! groupby(mordat, :date) :P_AG = :N ./ sum(:N)
+@transform! groupby(mordatkw, :date) :P_AG = :N ./ sum(:N)
 
 function referenceP_AG(mordat)
     @combine(groupby(mordat,:group),
@@ -13,21 +19,19 @@ function referenceP_AG(mordat,date)
             )
 end
 
-# (@transform referenceP_AG(mordat, Date(2000,1,1)) :marginalN = 80e6 .* :referenceP_AG)[:,end] |> sum
-function adjustierte_sterbefälle(mordat, rP, Ntotal = @combine(groupby(mordat,[:jahr,:monat]), :Ntotal=sum(:N)))
-    margmordat = leftjoin(mordat[:,[:jahr, :monat, :group, :P_AG, :PD, :D]], rP, on=:group)
-    margmordat = leftjoin(margmordat, Ntotal, on=[:jahr,:monat])
-    @transform! margmordat :PDreferenceP_AG = :PD .* :referenceP_AG
-
-    perMonat = @combine(groupby(margmordat, [:jahr,:monat]),
-                        :adjD = sum(:PD .* :referenceP_AG) * :Ntotal[1],
-                        :D = sum(:D),
-                        :adjPD = sum(:PD .* :referenceP_AG))
+# (@transform referenceP_AG(md, Date(2000,1,1)) :marginalN = 80e6 .* :referenceP_AG)[:,end] |> sum
+function adjustierte_sterbefälle(md, rP, time = [:jahr,:monat], Ntotal = @combine(groupby(md,time), :Ntotal=sum(:N)))
+    @info "data" md[time..., :group, :P_AG, :PD, :D]
+    mmd = leftjoin(md[:,[time..., :group, :P_AG, :PD, :D]], rP, on=:group)
+    mmd = leftjoin(mmd, Ntotal, on=time)
+    @transform! mmd :PDreferenceP_AG = :PD .* :referenceP_AG
+    @combine(groupby(mmd, time),
+             :adjD = sum(:PD .* :referenceP_AG) * :Ntotal[1],
+             :D = sum(:D),
+             :adjPD = sum(:PD .* :referenceP_AG))
     #)
 end
 
-Ntotal = @combine(groupby(mordat,[:jahr,:monat]), :Ntotal=sum(:N))
-@transform! groupby(mordat, :date) :P_AG = :N ./ sum(:N)
 
 #@transform! groupby(mordat,:date) :stackedN = cumsum(:N)
 
