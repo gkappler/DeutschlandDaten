@@ -6,23 +6,34 @@ als Julia [DataDeps.jl](https://www.oxinabox.net/DataDeps.jl/stable/)
 für Analysen 
 mit der modernen Programmiersprache [Julia](https://julialang.org/) für statistische Berechnungen.
 
+Die aktuellen Analysen 
+## [Wöchentliche Sterberate 2020 und 2021](images/Sterberate_2020_2021_wöchentlich/Readme.md)
+![](images/Sterberate_2020_2021_wöchentlich/Sterberate_2020_2021_wöchentlich_85+.svg)
+
+
+## [Rhythmen der Sterberate](Sterberate.md).
+![relative_Übersterblichkeit](images/relative_Übersterblichkeit.svg)
+
+## [Adjustierungen der Sterberaten auf Populationszahl und demographischen Verteilung](adjustierteSterblichkeit.md).
+![adjustierte_Sterbezahlen_Deutschland_wöchentlich](images/adjustierte_Sterbezahlen_Deutschland_wöchentlich.svg)
+
+# Das Julia Daten Paket
+
 ```julia
 julia> using DeutschlandDaten
 ```
 stellt Funktionen zur Datenabfrage zur Verfügung.
-Beispiele finden Sie in den [unit tests](tests/runtests.jl).
 
-Die aktuellen Analysen finden Sie in 
-- [Sterberate](Sterberate.md).
-
-Das Paket ermöglicht
-- Aktualisierungen offizieller Daten für
-- Generierung von SQL Tabellen
+Beispiele finden Sie in den [unit tests](test/runtests.jl).
 
 
 `DeutschlandDaten.jl` entstand auf Basis von 
 1. https://github.com/gkappler/Sterbestatistik
 2. Skripten für Analysen im Auftrag von Dr. Ute Bergner.
+
+Das Paket ermöglicht
+- Aktualisierungen offizieller Daten für
+- Generierung von SQL Tabellen
 
 
 ## Daten
