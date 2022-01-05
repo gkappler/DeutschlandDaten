@@ -1,4 +1,4 @@
-![Sterberate_2020_2021_wöchentlich_85](Sterberate_2020_2021_wöchentlich_85+.sv)
+![Sterberate_2020_2021_wöchentlich_85](Sterberate_2020_2021_wöchentlich_85+.svg)
 
 ![Sterberate_2020_2021_wöchentlich_80-85](Sterberate_2020_2021_wöchentlich_80-85.svg)
 
