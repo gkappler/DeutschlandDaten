@@ -1,3 +1,10 @@
+# Wöchentliche Sterberaten 2020 und 2021 im Vergleich seit 2000 | Bundesrepublik Deutschland
+
+Datenquellen: Statistisches Bundesamt
+https://github.com/gkappler/DeutschlandDaten
+
+![Sterberate_2020_2021_wöchentlich](Sterberate_2020_2021_wöchentlich.svg)
+
 ![Sterberate_2020_2021_wöchentlich_85](Sterberate_2020_2021_wöchentlich_85+.svg)
 
 ![Sterberate_2020_2021_wöchentlich_80-85](Sterberate_2020_2021_wöchentlich_80-85.svg)
